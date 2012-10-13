@@ -302,7 +302,7 @@
                     sum = 0;
                     for ( row = 0; row < 3; row++ ) {
                         if ( getSquarePiece ( row, 2 - row ) === '&nbsp;' ) {
-                            empty = [row, row];
+                            empty = [row, 2 - row];
                         }
                         sum += getSquarePieceValue ( row, 2 - row );
                     }
