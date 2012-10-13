@@ -49,21 +49,21 @@
                     <div class="nav-collapse collapse">
                         <!---->
                         <!--<ul class="nav">-->
-                            <!--<li class="active"><a href="#">Home</a></li>-->
-                            <!--<li><a href="#about">About</a></li>-->
-                            <!--<li><a href="#contact">Contact</a></li>-->
-                            <!--<li class="dropdown">-->
-                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
-                                <!--<ul class="dropdown-menu">-->
-                                    <!--<li><a href="#">Action</a></li>-->
-                                    <!--<li><a href="#">Another action</a></li>-->
-                                    <!--<li><a href="#">Something else here</a></li>-->
-                                    <!--<li class="divider"></li>-->
-                                    <!--<li class="nav-header">Nav header</li>-->
-                                    <!--<li><a href="#">Separated link</a></li>-->
-                                    <!--<li><a href="#">One more separated link</a></li>-->
-                                <!--</ul>-->
-                            <!--</li>-->
+                        <!--<li class="active"><a href="#">Home</a></li>-->
+                        <!--<li><a href="#about">About</a></li>-->
+                        <!--<li><a href="#contact">Contact</a></li>-->
+                        <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
+                        <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">Action</a></li>-->
+                        <!--<li><a href="#">Another action</a></li>-->
+                        <!--<li><a href="#">Something else here</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li class="nav-header">Nav header</li>-->
+                        <!--<li><a href="#">Separated link</a></li>-->
+                        <!--<li><a href="#">One more separated link</a></li>-->
+                        <!--</ul>-->
+                        <!--</li>-->
                         <!--</ul>-->
                         <!---->
                         <form class="navbar-form pull-right">
@@ -198,9 +198,9 @@
 
 
                 /*
-                * modal popup message window close button click
-                * event handler - closes the window
-                */
+                 * modal popup message window close button click
+                 * event handler - closes the window
+                 */
                 $ ( '#myModalCloseBtn' ).click ( function ( event ) {
                     $ ( '#myModal' ).modal ( 'hide' );
                 } );
@@ -208,9 +208,9 @@
 
 
 
-                $('#signinButton' ).click( function ( event ) {
+                $ ( '#signinButton' ).click ( function ( event ) {
                     showModalPopUpMessage ( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-play version running on NodeJs.' );
-                });
+                } );
 
                 /*
                  * return either 'X' or 'O'
@@ -288,6 +288,7 @@
                     }
 
                     // sum 2 diagonals
+                    sum = 0;
                     for ( row = 0; row < 3; row++ ) {
                         if ( getSquarePiece ( row, row ) === '&nbsp;' ) {
                             empty = [row, row];
@@ -298,6 +299,7 @@
                         return empty;
                     }
 
+                    sum = 0;
                     for ( row = 0; row < 3; row++ ) {
                         if ( getSquarePiece ( row, 2 - row ) === '&nbsp;' ) {
                             empty = [row, row];
@@ -316,8 +318,8 @@
 
 
                 /*
-                * randomly find and play an open square, used by computer
-                */
+                 * randomly find and play an open square, used by computer
+                 */
                 var findRandomOpenSquare = function () {
                     var keepSearching = true;
                     var square;
@@ -357,15 +359,245 @@
 
 
 
+
+
+
+
                 /*
-                 * Clear the game board without animation
+                 * shows the computer avatar talking head
                  */
-                var clearBoard = function () {
-                    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
-                        $ ( Element ).html ( '&nbsp;' );
-                        $ ( Element ).unbind ( 'click' );
-                    } );
+                $ ( document ).on ( 'show_computer_avatar', function ( eventObject ) {
+                    $computerAvatar.css ( 'visibility', 'visible' );
+                    $humanAvatar.css ( 'visibility', 'hidden' );
+                } );
+
+
+
+
+
+                /*
+                 * shows the human avatar talking head
+                 */
+                $ ( document ).on ( 'show_human_avatar', function ( eventObject ) {
+                    $computerAvatar.css ( 'visibility', 'hidden' );
+                    $humanAvatar.css ( 'visibility', ' visible' );
+                } );
+
+
+
+
+
+                /*
+                 * Computer's turn
+                 */
+                var computersTurn = function () {
+                    var square;
+                    var num;
+                    var keepSearching;
+                    var winingSquare;
+                    var blockingSquare;
+
+                    $ ( document ).triggerHandler ( 'show_computer_avatar' );
+                    // if this is the 1st move then take center square ha ha ha ...
+//                    if ( movesCount === 0 ) {
+////                        $ ( board[4] ).html ( 'X' );
+//
+//
+//                    } else {
+
+                        /*
+                         * finds a winning move if there is one mathematically.
+                         * since computer pieces each have a value of 4, any row
+                         * whose value is 8 (4 x 2) is a candidate for a winning move.
+                         * very simple, actually.
+                         */
+                        winingSquare = findRowWithSum ( 8 );
+                        if ( winingSquare ) {
+                            square = getSquare ( winingSquare[0], winingSquare[1] );
+//                            $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+
+
+                        } else {
+
+                            /*
+                             * finds a blocking move if there is one mathematically.
+                             * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
+                             * has a square that can be used to block. very simple, actually.
+                             */
+                            blockingSquare = findRowWithSum ( 2 );
+                            if ( blockingSquare ) {
+                                square = getSquare ( blockingSquare[0], blockingSquare[1] );
+//                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+
+
+                            } else {
+
+                                /*
+                                 * there is no winning or blocking move so the
+                                 * computer will chose its square randomly.
+                                 */
+                                square = findRandomOpenSquare ();
+//                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+
+                            }
+
+                        }
+
+//                    }
+
+                    movesCount += 1;
+
+                    // just a little bit of latency so the computer talking head can be seen
+                    setTimeout ( function () {
+                        $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+                        if ( checkForWin ( 12 ) === false ) {
+                            if ( movesCount < 9 ) {
+                                $ ( document ).triggerHandler ( 'humans_turn' );
+                            } else {
+                                showModalPopUpMessage ( 'Draw... Game Over!' );
+                            }
+                        } else {
+                            showModalPopUpMessage ( 'The Computer Won!<br>Ha Ha LOL!!!!' );
+                        }
+                    }, 1000 );
+
                 };
+
+
+
+
+
+                /*
+                 * disables the board from human play
+                 */
+                var disableTheBoard = function () {
+                    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
+                        $ ( Element ).unbind ( 'click' ).css ( 'cursor', 'auto' );
+                    } );
+
+                };
+
+
+
+
+
+                /*
+                 * checks for a winning move by either human or computer
+                 */
+                var checkForWin = function ( winingValue ) {
+                    var row = 0;
+                    var col = 0;
+                    var sum = 0;
+
+                    console.log ( 'checking for wining value of ' + winingValue + ". moveCount = " + movesCount );
+
+                    if ( movesCount >= 5 ) {
+                        // check horizontal rows
+                        for ( row = 0; row < 3; row++ ) {
+                            sum = 0;
+                            for ( col = 0; col < 3; col++ ) {
+                                sum += getSquarePieceValue ( row, col );
+                            }
+
+                            if ( sum === winingValue ) {
+                                console.log ( 'wining value found in horizontal row' );
+                                return true;
+                            }
+                        }
+
+                        // check vertical rows
+                        for ( col = 0; col < 3; col++ ) {
+                            sum = 0;
+                            for ( row = 0; row < 3; row++ ) {
+                                sum += getSquarePieceValue ( row, col );
+                            }
+
+                            if ( sum === winingValue ) {
+                                console.log ( 'wining value found in vertical row' );
+                                return true;
+                            }
+                        }
+
+                        // check diagonal rows
+                        sum = 0;
+                        for ( row = 0; row < 3; row++ ) {
+                            sum += getSquarePieceValue ( row, row );
+                        }
+                        if ( sum === winingValue ) {
+                            console.log ( 'wining value found in diagonal row, top left to bottom right' );
+                            return true;
+                        }
+
+                        sum = 0;
+                        for ( row = 0; row < 3; row++ ) {
+                            sum += getSquarePieceValue ( row, 2 - row );
+                        }
+                        if ( sum === winingValue ) {
+                            console.log ( 'wining value found in diagon row, top right to botton left' );
+                            return true;
+                        }
+
+                    }
+                    return false;
+                };
+
+
+
+
+
+                /*
+                 * handles human square click events
+                 */
+                var humanClickHandler = function ( event, Element ) {
+                    // mark the board
+                    $ ( Element ).text ( 'O' ).css ( 'color', '#000' ).
+                            css ( 'cursor', 'auto' ).unbind ( 'click' );
+
+                    movesCount += 1;
+
+                    // disable the board
+                    disableTheBoard( );
+
+                    // check for win
+                    if ( checkForWin ( 3 ) === false ) {
+                        if ( movesCount < 9 ) {
+                            computersTurn ();
+                        } else {
+                            showModalPopUpMessage ( 'Draw... Game Over!' );
+                        }
+                    } else {
+                        showModalPopUpMessage ( 'Congratulations! You are the winner.' );
+                    }
+
+                };
+
+
+
+
+                /*
+                 * enables the board for human play
+                 */
+                var enableTheBoard = function () {
+                    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
+                        if ( $ ( Element ).html () === '&nbsp;' ) {
+                            $ ( Element ).click (function ( event ) {
+                                humanClickHandler ( event, Element );
+                            } ).css ( 'cursor', 'pointer' );
+                        }
+                    } )
+                } ;
+
+
+
+
+
+                /*
+                 * Event type humans_turn handler
+                 */
+                $ ( document ).on ( 'humans_turn', function () {
+                    $ ( document ).triggerHandler ( 'show_human_avatar' );
+                    enableTheBoard( );
+                } );
 
 
 
@@ -381,10 +613,10 @@
 
                     visitEachSquare ( $squares, function ( index, Element ) {
                         var row = Math.floor ( index / 3 );
-                        console.log ( row );
+                        //console.log ( row );
 
                         var col = index % 3;
-                        console.log ( col );
+                        //console.log ( col );
 
                         var player = index % 2 === 0 ? 'X' : 'O';
                         toDos.push ( {player : player, Element : Element} );
@@ -438,24 +670,14 @@
 
 
                 /*
-                * shows the computer avatar talking head
-                */
-                $ ( document ).on ( 'show_computer_avatar', function ( eventObject ) {
-                    $computerAvatar.css ( 'visibility', 'visible' );
-                    $humanAvatar.css ( 'visibility', 'hidden' );
-                } );
-
-
-
-
-
-                /*
-                * shows the human avatar talking head
-                */
-                $ ( document ).on ( 'show_human_avatar', function ( eventObject ) {
-                    $computerAvatar.css ( 'visibility', 'hidden' );
-                    $humanAvatar.css ( 'visibility', ' visible' );
-                } );
+                 * Clear the game board without animation
+                 */
+                var clearBoard = function () {
+                    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
+                        $ ( Element ).html ( '&nbsp;' );
+                        $ ( Element ).unbind ( 'click' );
+                    } );
+                };
 
 
 
@@ -466,219 +688,9 @@
                  */
                 var play = function () {
                     var $squares = $ ( 'div.square' );
-
                     clearBoard ();
-
-                    $ ( document ).triggerHandler ( 'computers_turn' );
-
+                    computersTurn ();
                 };
-
-
-
-
-
-                /*
-                 * Event type computer_turn handler
-                 */
-                $ ( document ).on ( 'computers_turn', function () {
-                    var square;
-                    var num;
-                    var keepSearching;
-                    var winingSquare;
-                    var blockingSquare;
-
-                    $ ( document ).triggerHandler ( 'show_computer_avatar' );
-                    // if this is the 1st move then take center square ha ha ha ...
-                    if ( movesCount === 0 ) {
-                        $ ( board[4] ).html ( 'X' );
-
-
-                    } else {
-
-                        /*
-                         * finds a winning move if there is one mathematically.
-                         * since computer pieces each have a value of 4, any row
-                         * whose value is 8 (4 x 2) is a candidate for a winning move.
-                         * very simple, actually.
-                         */
-                        winingSquare = findRowWithSum ( 8 );
-                        if ( winingSquare ) {
-                            square = getSquare ( winingSquare[0], winingSquare[1] );
-                            $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
-
-
-                        } else {
-
-                            /*
-                             * finds a blocking move if there is one mathematically.
-                             * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
-                             * has a square that can be used to block. very simple, actually.
-                             */
-                            blockingSquare = findRowWithSum ( 2 );
-                            if ( blockingSquare ) {
-                                square = getSquare ( blockingSquare[0], blockingSquare[1] );
-                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
-
-
-                            } else {
-
-                                /*
-                                 * there is no winning or blocking move so the
-                                 * computer will chose its square randomly.
-                                 */
-                                square = findRandomOpenSquare ();
-                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
-
-                            }
-
-                        }
-
-                    }
-
-                    movesCount += 1;
-
-                    // just a little bit of latency so the computer talking head can be seen
-                    setTimeout ( function () {
-                        if ( checkForWin ( 12 ) === false ) {
-                            if ( movesCount < 9 ) {
-                                $ ( document ).triggerHandler ( 'humans_turn' );
-                            } else {
-                                showModalPopUpMessage ( 'Draw... Game Over!' );
-                            }
-                        } else {
-                            showModalPopUpMessage ( 'The Computer Won!<br>Ha Ha LOL!!!!' );
-                        }
-                    }, 1000 );
-
-                } );
-
-
-
-
-
-                /*
-                * disables the board from human play
-                */
-                $ ( document ).on ( 'disable_the_board', function () {
-                    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
-                        $ ( Element ).unbind ( 'click' ).css ( 'cursor', 'auto' );
-                    } );
-
-                } );
-
-
-
-
-
-                /*
-                 * checks for a winning move by either human or computer
-                 */
-                var checkForWin = function ( winingValue ) {
-                    var row = 0;
-                    var col = 0;
-                    var sum = 0;
-
-                    if ( movesCount >= 5 ) {
-                        // check horizontal rows
-                        for ( row = 0; row < 3; row++ ) {
-                            sum = 0;
-                            for ( col = 0; col < 3; col++ ) {
-                                sum += getSquarePieceValue ( row, col );
-                            }
-
-                            if ( sum === winingValue ) {
-                                return true;
-                            }
-                        }
-
-                        // check vertical rows
-                        for ( col = 0; col < 3; col++ ) {
-                            sum = 0;
-                            for ( row = 0; row < 3; row++ ) {
-                                sum += getSquarePieceValue ( row, col );
-                            }
-
-                            if ( sum === winingValue ) {
-                                return true;
-                            }
-                        }
-
-                        // check diagonal rows
-                        for ( row = 0; row < 3; row++ ) {
-                            sum += getSquarePieceValue ( row, row );
-                        }
-                        if ( sum === winingValue ) {
-                            return true;
-                        }
-
-                        for ( row = 0; row < 3; row++ ) {
-                            sum += getSquarePieceValue ( row, 2 - row );
-                        }
-                        if ( sum === winingValue ) {
-                            return true;
-                        }
-
-                    }
-                    return false;
-                };
-
-
-
-
-
-                /*
-                * handles human square click events
-                */
-                var humanClickHandler = function ( event, Element ) {
-                    // mark the board
-                    $ ( Element ).text ( 'O' ).css ( 'color', '#000' ).
-                            css ( 'cursor', 'auto' ).unbind ( 'click' );
-
-                    movesCount += 1;
-
-                    // disable the board
-                    $ ( document ).triggerHandler ( 'disable_the_board' );
-
-                    // check for win
-                    if ( checkForWin ( 3 ) === false ) {
-                        if ( movesCount < 9 ) {
-                            $ ( document ).triggerHandler ( 'computers_turn' );
-                        } else {
-                            showModalPopUpMessage ( 'Draw... Game Over!' );
-                        }
-                    } else {
-                        showModalPopUpMessage ( 'There Is A Winner!' );
-                    }
-
-                };
-
-
-
-
-                /*
-                 * enables the board for human play
-                 */
-                $ ( document ).on ( 'enable_the_board', function () {
-                    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
-                        if ( $ ( Element ).html () === '&nbsp;' ) {
-                            $ ( Element ).click (function ( event ) {
-                                humanClickHandler ( event, Element );
-                            } ).css ( 'cursor', 'pointer' );
-                        }
-                    } )
-                } );
-
-
-
-
-
-                /*
-                 * Event type humans_turn handler
-                 */
-                $ ( document ).on ( 'humans_turn', function () {
-                    $ ( document ).triggerHandler ( 'show_human_avatar' );
-                    $ ( document ).triggerHandler ( 'enable_the_board' );
-                } );
 
 
 
