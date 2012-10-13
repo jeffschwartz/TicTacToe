@@ -81,8 +81,8 @@
             <div class="hero-unit">
                 <h1>Lets Play Tic Tac Toe!</h1>
 
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero
-                    unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                <p>An implementation of the classic Tic Tac Toe game pitting you against the computer.
+                    If you are up to the challenge click the Begin New Game button below to begin playing.</p>
 
                 <p><a id="begingame" class="btn btn-primary btn-large">Begin New Game &raquo;</a></p>
             </div>
@@ -134,6 +134,19 @@
                         <div class="square" style="border-left: solid 1px #444;">&nbsp;</div>
                     </div>
                 </div>
+                <!-- Modal -->
+                <div class="modal hide fade" id="myModal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3>Tic Tac Toe Says...</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p id="myModalMessage">One fine body…</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn" id="myModalCloseBtn">Close</a>
+                    </div>
+                </div>
             </div>
             <hr>
 
@@ -148,12 +161,10 @@
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="libs/bootstrap/js/bootstrap.js"></script>
         <script>
 
             "use strict";
-
-
-
 
 
             $ ( function () {
@@ -166,6 +177,39 @@
 
 
 
+
+                /*
+                 * modal popup message window with dynamic content
+                 */
+                var showModalPopUpMessage = function ( message ) {
+                    $ ( '#myModalMessage' ).html ( message );
+                    $ ( '#myModal' ).modal ( {
+                        backdrop : true,
+                        keyboard : true,
+                        show     : true,
+                        remote   : false
+                    } );
+                };
+
+
+
+
+
+                /*
+                * modal popup message window close button click
+                * event handler - closes the window
+                */
+                $ ( '#myModalCloseBtn' ).click ( function ( event ) {
+                    $ ( '#myModal' ).modal ( 'hide' );
+                } );
+
+
+
+
+
+                /*
+                 * return either 'X' or 'O'
+                 */
                 var getSquarePiece = function ( row, col ) {
                     return $ ( board[row * 3 + col] ).html ();
                 };
@@ -174,6 +218,9 @@
 
 
 
+                /*
+                 * return either 1 or 4
+                 */
                 var getSquarePieceValue = function ( row, col ) {
                     var piece = getSquarePiece ( row, col );
                     return  piece === '&nbsp;' ? 0 : piece === 'O' ? 1 : 4;
@@ -181,14 +228,23 @@
 
 
 
-                var getSquare = function(row, col){
-                   return board[row * 3 + col];
-                };
 
 
                 /*
-                 * finds either a blocking or a winning square.
-                 * looks for any row which has a value of rowSum, because
+                 * return html element associated with the square
+                 * represented by row and col (row * 3 + col)
+                 */
+                var getSquare = function ( row, col ) {
+                    return board[row * 3 + col];
+                };
+
+
+
+
+
+                /*
+                 * can be called to find either a blocking or a winning square.
+                 * looks for any row which has a value of rowSum, and
                  * the open square in that row is either the winning or
                  * blocking square.
                  */
@@ -254,7 +310,9 @@
 
 
 
-
+                /*
+                * randomly find and play an open square, used by computer
+                */
                 var findRandomOpenSquare = function () {
                     var keepSearching = true;
                     var square;
@@ -278,8 +336,6 @@
 
 
 
-
-
                 /*
                  * do something when visiting each square
                  */
@@ -296,8 +352,6 @@
 
 
 
-
-
                 /*
                  * Clear the game board without animation
                  */
@@ -307,7 +361,6 @@
                         $ ( Element ).unbind ( 'click' );
                     } );
                 };
-
 
 
 
@@ -379,7 +432,9 @@
 
 
 
-
+                /*
+                * shows the computer avatar talking head
+                */
                 $ ( document ).on ( 'show_computer_avatar', function ( eventObject ) {
                     $computerAvatar.css ( 'visibility', 'visible' );
                     $humanAvatar.css ( 'visibility', 'hidden' );
@@ -389,12 +444,13 @@
 
 
 
-
+                /*
+                * shows the human avatar talking head
+                */
                 $ ( document ).on ( 'show_human_avatar', function ( eventObject ) {
                     $computerAvatar.css ( 'visibility', 'hidden' );
                     $humanAvatar.css ( 'visibility', ' visible' );
                 } );
-
 
 
 
@@ -416,7 +472,6 @@
 
 
 
-
                 /*
                  * Event type computer_turn handler
                  */
@@ -431,6 +486,8 @@
                     // if this is the 1st move then take center square ha ha ha ...
                     if ( movesCount === 0 ) {
                         $ ( board[4] ).html ( 'X' );
+
+
                     } else {
 
                         /*
@@ -443,25 +500,33 @@
                         if ( winingSquare ) {
                             square = getSquare ( winingSquare[0], winingSquare[1] );
                             $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
-                        }
 
-                        /*
-                         * finds a blocking move if there is one mathematically.
-                         * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
-                         * has a square that can be used to block. very simple, actually.
-                         */
-                        blockingSquare = findRowWithSum ( 2 );
-                        if ( blockingSquare ) {
-                            square = getSquare ( blockingSquare[0], blockingSquare[1] );
-                            $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
-                        }
 
-                        /*
-                         * there is no winning or blocking move so the
-                         * computer will chose its square randomly.
-                         */
-                        square = findRandomOpenSquare ();
-                        $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+                        } else {
+
+                            /*
+                             * finds a blocking move if there is one mathematically.
+                             * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
+                             * has a square that can be used to block. very simple, actually.
+                             */
+                            blockingSquare = findRowWithSum ( 2 );
+                            if ( blockingSquare ) {
+                                square = getSquare ( blockingSquare[0], blockingSquare[1] );
+                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+
+
+                            } else {
+
+                                /*
+                                 * there is no winning or blocking move so the
+                                 * computer will chose its square randomly.
+                                 */
+                                square = findRandomOpenSquare ();
+                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
+
+                            }
+
+                        }
 
                     }
 
@@ -469,10 +534,14 @@
 
                     // just a little bit of latency so the computer talking head can be seen
                     setTimeout ( function () {
-                        if ( checkForWin (12) === false ) {
-                            $ ( document ).triggerHandler ( 'humans_turn' );
+                        if ( checkForWin ( 12 ) === false ) {
+                            if ( movesCount < 9 ) {
+                                $ ( document ).triggerHandler ( 'humans_turn' );
+                            } else {
+                                showModalPopUpMessage ( 'Draw... Game Over!' );
+                            }
                         } else {
-                            alert ( 'The Computer Won!\nThe Computer Won! Ha Ha LOL!!!!' );
+                            showModalPopUpMessage ( 'The Computer Won!<br>Ha Ha LOL!!!!' );
                         }
                     }, 1000 );
 
@@ -482,8 +551,9 @@
 
 
 
-
-
+                /*
+                * disables the board from human play
+                */
                 $ ( document ).on ( 'disable_the_board', function () {
                     visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
                         $ ( Element ).unbind ( 'click' ).css ( 'cursor', 'auto' );
@@ -495,17 +565,13 @@
 
 
 
-
-
-
                 /*
                  * checks for a winning move by either human or computer
                  */
-                var checkForWin = function (winingValue) {
+                var checkForWin = function ( winingValue ) {
                     var row = 0;
                     var col = 0;
                     var sum = 0;
-                    var board = $ ( 'div.square' ).toArray ();
 
                     if ( movesCount >= 5 ) {
                         // check horizontal rows
@@ -555,8 +621,9 @@
 
 
 
-
-
+                /*
+                * handles human square click events
+                */
                 var humanClickHandler = function ( event, Element ) {
                     // mark the board
                     $ ( Element ).text ( 'O' ).css ( 'color', '#000' ).
@@ -568,10 +635,14 @@
                     $ ( document ).triggerHandler ( 'disable_the_board' );
 
                     // check for win
-                    if ( checkForWin (3) === false ) {
-                        $ ( document ).triggerHandler ( 'computers_turn' );
+                    if ( checkForWin ( 3 ) === false ) {
+                        if ( movesCount < 9 ) {
+                            $ ( document ).triggerHandler ( 'computers_turn' );
+                        } else {
+                            showModalPopUpMessage ( 'Draw... Game Over!' );
+                        }
                     } else {
-                        alert ( 'There Is A Winner!' );
+                        showModalPopUpMessage ( 'There Is A Winner!' );
                     }
 
                 };
@@ -579,8 +650,9 @@
 
 
 
-
-
+                /*
+                 * enables the board for human play
+                 */
                 $ ( document ).on ( 'enable_the_board', function () {
                     visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
                         if ( $ ( Element ).html () === '&nbsp;' ) {
@@ -595,7 +667,6 @@
 
 
 
-
                 /*
                  * Event type humans_turn handler
                  */
@@ -603,8 +674,6 @@
                     $ ( document ).triggerHandler ( 'show_human_avatar' );
                     $ ( document ).triggerHandler ( 'enable_the_board' );
                 } );
-
-
 
 
 
@@ -625,7 +694,6 @@
 
 
 
-
                 /*
                  * event handler for Begin New Game button click event
                  */
@@ -636,7 +704,6 @@
                     $computerAvatar.css ( 'visibility', 'hidden' );
                     startGame ();
                 } );
-
 
 
 
