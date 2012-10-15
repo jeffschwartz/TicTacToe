@@ -1,8 +1,6 @@
-
-"use strict";
-
-
 $ ( function () {
+
+  "use strict";
 
   var movesCount = 0;
   var $humanAvatar = $ ( '#humanavatar' );
@@ -34,14 +32,14 @@ $ ( function () {
    * modal popup message window close button click
    * event handler - closes the window
    */
-  $ ( '#myModalCloseBtn' ).click ( function ( event ) {
+  $ ( '#myModalCloseBtn' ).click ( function ( /*event*/ ) {
     $ ( '#myModal' ).modal ( 'hide' );
   } );
 
 
 
 
-  $ ( '#signinButton' ).click ( function ( event ) {
+  $ ( '#signinButton' ).click ( function ( /*event*/ ) {
     showModalPopUpMessage ( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-play version running on NodeJs.' );
   } );
 
@@ -93,9 +91,9 @@ $ ( function () {
     var empty;
 
     // sum all rows
-    for ( row = 0; row < 3; row++ ) {
+    for ( row = 0; row < 3; row += 1 ) {
       sum = 0;
-      for ( col = 0; col < 3; col++ ) {
+      for ( col = 0; col < 3; col += 1 ) {
         if ( getSquarePiece ( row, col ) === '&nbsp;' ) {
           empty = [row, col];
         }
@@ -107,9 +105,9 @@ $ ( function () {
     }
 
     // sum all cols
-    for ( col = 0; col < 3; col++ ) {
+    for ( col = 0; col < 3; col += 1) {
       sum = 0;
-      for ( row = 0; row < 3; row++ ) {
+      for ( row = 0; row < 3; row += 1) {
         if ( getSquarePiece ( row, col ) === '&nbsp;' ) {
           empty = [row, col];
         }
@@ -122,7 +120,7 @@ $ ( function () {
 
     // sum 2 diagonals
     sum = 0;
-    for ( row = 0; row < 3; row++ ) {
+    for ( row = 0; row < 3; row += 1 ) {
       if ( getSquarePiece ( row, row ) === '&nbsp;' ) {
         empty = [row, row];
       }
@@ -133,7 +131,7 @@ $ ( function () {
     }
 
     sum = 0;
-    for ( row = 0; row < 3; row++ ) {
+    for ( row = 0; row < 3; row += 1 ) {
       if ( getSquarePiece ( row, 2 - row ) === '&nbsp;' ) {
         empty = [row, 2 - row];
       }
@@ -195,7 +193,7 @@ $ ( function () {
   /*
    * shows the computer avatar talking head
    */
-  $ ( document ).on ( 'show_computer_avatar', function ( eventObject ) {
+  $ ( document ).on ( 'show_computer_avatar', function ( /*eventObject*/ ) {
     $computerAvatar.css ( 'visibility', 'visible' );
     $humanAvatar.css ( 'visibility', 'hidden' );
   } );
@@ -207,7 +205,7 @@ $ ( function () {
   /*
    * shows the human avatar talking head
    */
-  $ ( document ).on ( 'show_human_avatar', function ( eventObject ) {
+  $ ( document ).on ( 'show_human_avatar', function ( /*eventObject*/ ) {
     $computerAvatar.css ( 'visibility', 'hidden' );
     $humanAvatar.css ( 'visibility', ' visible' );
   } );
@@ -230,8 +228,7 @@ $ ( function () {
    */
   var computersTurn = function () {
     var square;
-    var num;
-    var keepSearching;
+//    var num;
     var winingSquare;
     var blockingSquare;
 
@@ -252,7 +249,6 @@ $ ( function () {
     winingSquare = findRowWithSum ( 8 );
     if ( winingSquare ) {
       square = getSquare ( winingSquare[0], winingSquare[1] );
-//                            $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
 
 
     } else {
@@ -265,7 +261,6 @@ $ ( function () {
       blockingSquare = findRowWithSum ( 2 );
       if ( blockingSquare ) {
         square = getSquare ( blockingSquare[0], blockingSquare[1] );
-//                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
 
 
       } else {
@@ -275,7 +270,6 @@ $ ( function () {
          * computer will chose its square randomly.
          */
         square = findRandomOpenSquare ();
-//                                $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
 
       }
 
@@ -333,9 +327,9 @@ $ ( function () {
 
     if ( movesCount >= 5 ) {
       // check horizontal rows
-      for ( row = 0; row < 3; row++ ) {
+      for ( row = 0; row < 3; row += 1 ) {
         sum = 0;
-        for ( col = 0; col < 3; col++ ) {
+        for ( col = 0; col < 3; col += 1 ) {
           sum += getSquarePieceValue ( row, col );
         }
 
@@ -346,9 +340,9 @@ $ ( function () {
       }
 
       // check vertical rows
-      for ( col = 0; col < 3; col++ ) {
+      for ( col = 0; col < 3; col += 1 ) {
         sum = 0;
-        for ( row = 0; row < 3; row++ ) {
+        for ( row = 0; row < 3; row += 1 ) {
           sum += getSquarePieceValue ( row, col );
         }
 
@@ -360,7 +354,7 @@ $ ( function () {
 
       // check diagonal rows
       sum = 0;
-      for ( row = 0; row < 3; row++ ) {
+      for ( row = 0; row < 3; row += 1 ) {
         sum += getSquarePieceValue ( row, row );
       }
       if ( sum === winingValue ) {
@@ -369,7 +363,7 @@ $ ( function () {
       }
 
       sum = 0;
-      for ( row = 0; row < 3; row++ ) {
+      for ( row = 0; row < 3; row += 1 ) {
         sum += getSquarePieceValue ( row, 2 - row );
       }
       if ( sum === winingValue ) {
@@ -426,7 +420,7 @@ $ ( function () {
           humanClickHandler ( event, Element );
         } ).css ( 'cursor', 'pointer' );
       }
-    } )
+    } );
   } ;
 
 
@@ -454,11 +448,6 @@ $ ( function () {
     var $squares = $ ( 'div.square' );
 
     visitEachSquare ( $squares, function ( index, Element ) {
-      var row = Math.floor ( index / 3 );
-      //console.log ( row );
-
-      var col = index % 3;
-      //console.log ( col );
 
       var player = index % 2 === 0 ? 'X' : 'O';
       toDos.push ( {player : player, Element : Element} );
@@ -529,7 +518,6 @@ $ ( function () {
    * Plays the game
    */
   var play = function () {
-    var $squares = $ ( 'div.square' );
     clearBoard ();
     computersTurn ();
   };
@@ -556,7 +544,7 @@ $ ( function () {
   /*
    * event handler for Begin New Game button click event
    */
-  $ ( '#begingame' ).click ( function ( event ) {
+  $ ( '#begingame' ).click ( function ( /*event*/ ) {
     movesCount = 0;
     // hide the message_container
     $('#message_container' ).css('display','none');
