@@ -1,11 +1,11 @@
-$ ( function () {
+$( function () {
 
   "use strict";
 
   var movesCount = 0;
-  var $humanAvatar = $ ( '#humanavatar' );
-  var $computerAvatar = $ ( '#computeravatar' );
-  var board = $ ( 'div.square' ).toArray ();
+  var $humanAvatar = $( '#humanavatar' );
+  var $computerAvatar = $( '#computeravatar' );
+  var board = $( 'div.square' ).toArray();
 
 
 
@@ -15,8 +15,8 @@ $ ( function () {
    * modal popup message window with dynamic content
    */
   var showModalPopUpMessage = function ( message ) {
-    $ ( '#myModalMessage' ).html ( message );
-    $ ( '#myModal' ).modal ( {
+    $( '#myModalMessage' ).html( message );
+    $( '#myModal' ).modal( {
       backdrop : true,
       keyboard : true,
       show     : true,
@@ -32,18 +32,18 @@ $ ( function () {
    * modal popup message window close button click
    * event handler - closes the window
    */
-  $ ( '#myModalCloseBtn' ).click ( function ( /*event*/ ) {
-    $ ( '#myModal' ).modal ( 'hide' );
+  $( '#myModalCloseBtn' ).click( function ( /*event*/ ) {
+    $( '#myModal' ).modal( 'hide' );
   } );
 
 
 
 
   /*
-  * Display message when the sign in button is clicked
-  */
-  $ ( '#signinButton' ).click ( function ( /*event*/ ) {
-    showModalPopUpMessage ( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-play version running on NodeJs.' );
+   * Display message when the sign in button is clicked
+   */
+  $( '#signinButton' ).click( function ( /*event*/ ) {
+    showModalPopUpMessage( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-play version running on NodeJs.' );
   } );
 
 
@@ -54,7 +54,7 @@ $ ( function () {
    * return either 'X' or 'O'
    */
   var getSquarePiece = function ( row, col ) {
-    return $ ( board[row * 3 + col] ).html ();
+    return $( board[row * 3 + col] ).html();
   };
 
 
@@ -65,7 +65,7 @@ $ ( function () {
    * return either 1 or 4
    */
   var getSquarePieceValue = function ( row, col ) {
-    var piece = getSquarePiece ( row, col );
+    var piece = getSquarePiece( row, col );
     return  piece === '&nbsp;' ? 0 : piece === 'O' ? 1 : 4;
   };
 
@@ -101,10 +101,10 @@ $ ( function () {
     for ( row = 0; row < 3; row += 1 ) {
       sum = 0;
       for ( col = 0; col < 3; col += 1 ) {
-        if ( getSquarePiece ( row, col ) === '&nbsp;' ) {
+        if ( getSquarePiece( row, col ) === '&nbsp;' ) {
           empty = [row, col];
         }
-        sum += getSquarePieceValue ( row, col );
+        sum += getSquarePieceValue( row, col );
       }
       if ( sum === rowSum ) {
         return empty;
@@ -112,13 +112,13 @@ $ ( function () {
     }
 
     // sum all cols
-    for ( col = 0; col < 3; col += 1) {
+    for ( col = 0; col < 3; col += 1 ) {
       sum = 0;
-      for ( row = 0; row < 3; row += 1) {
-        if ( getSquarePiece ( row, col ) === '&nbsp;' ) {
+      for ( row = 0; row < 3; row += 1 ) {
+        if ( getSquarePiece( row, col ) === '&nbsp;' ) {
           empty = [row, col];
         }
-        sum += getSquarePieceValue ( row, col );
+        sum += getSquarePieceValue( row, col );
       }
       if ( sum === rowSum ) {
         return empty;
@@ -128,10 +128,10 @@ $ ( function () {
     // sum 2 diagonals
     sum = 0;
     for ( row = 0; row < 3; row += 1 ) {
-      if ( getSquarePiece ( row, row ) === '&nbsp;' ) {
+      if ( getSquarePiece( row, row ) === '&nbsp;' ) {
         empty = [row, row];
       }
-      sum += getSquarePieceValue ( row, row );
+      sum += getSquarePieceValue( row, row );
     }
     if ( sum === rowSum ) {
       return empty;
@@ -139,10 +139,10 @@ $ ( function () {
 
     sum = 0;
     for ( row = 0; row < 3; row += 1 ) {
-      if ( getSquarePiece ( row, 2 - row ) === '&nbsp;' ) {
+      if ( getSquarePiece( row, 2 - row ) === '&nbsp;' ) {
         empty = [row, 2 - row];
       }
-      sum += getSquarePieceValue ( row, 2 - row );
+      sum += getSquarePieceValue( row, 2 - row );
     }
     if ( sum === rowSum ) {
       return empty;
@@ -165,9 +165,9 @@ $ ( function () {
     var text;
 
     while ( keepSearching === true ) {
-      num = Math.floor ( (Math.random () * 9) + 1 );
+      num = Math.floor( (Math.random() * 9) + 1 );
       square = board[num - 1];
-      text = $ ( square ).html ();
+      text = $( square ).html();
 
       if ( text === '&nbsp;' ) {
         keepSearching = false;
@@ -187,8 +187,8 @@ $ ( function () {
   var visitEachSquare = function ( $squares, cb ) {
 
     // call callback function passing index & Element as parameters
-    $squares.each ( function ( index, Element ) {
-      cb ( index, Element );
+    $squares.each( function ( index, Element ) {
+      cb( index, Element );
     } );
 
   };
@@ -200,9 +200,9 @@ $ ( function () {
   /*
    * shows the computer avatar talking head
    */
-  $ ( document ).on ( 'show_computer_avatar', function ( /*eventObject*/ ) {
-    $computerAvatar.css ( 'visibility', 'visible' );
-    $humanAvatar.css ( 'visibility', 'hidden' );
+  $( document ).on( 'show_computer_avatar', function ( /*eventObject*/ ) {
+    $computerAvatar.css( 'visibility', 'visible' );
+    $humanAvatar.css( 'visibility', 'hidden' );
   } );
 
 
@@ -212,9 +212,9 @@ $ ( function () {
   /*
    * shows the human avatar talking head
    */
-  $ ( document ).on ( 'show_human_avatar', function ( /*eventObject*/ ) {
-    $computerAvatar.css ( 'visibility', 'hidden' );
-    $humanAvatar.css ( 'visibility', ' visible' );
+  $( document ).on( 'show_human_avatar', function ( /*eventObject*/ ) {
+    $computerAvatar.css( 'visibility', 'hidden' );
+    $humanAvatar.css( 'visibility', ' visible' );
   } );
 
 
@@ -222,14 +222,14 @@ $ ( function () {
 
 
   /*
-  * show the game is over
-  */
-  $ (document ).on('show_game_over', function (  ) {
-    $('#avatars_container' ).css('display', 'none');
-    $('#message_container' ).css('display','block');
-    $('#message' ).text('Game Over. Click the Begin New Game button above to start a new game.' ).css('visibility', 'visible');
+   * show the game is over
+   */
+  $( document ).on( 'show_game_over', function () {
+    $( '#avatars_container' ).css( 'display', 'none' );
+    $( '#message_container' ).css( 'display', 'block' );
+    $( '#message' ).text( 'Game Over. Click the Begin New Game button above to start a new game.' ).css( 'visibility', 'visible' );
 
-  });
+  } );
   /*
    * Computer's turn
    */
@@ -239,7 +239,7 @@ $ ( function () {
     var winingSquare;
     var blockingSquare;
 
-    $ ( document ).triggerHandler ( 'show_computer_avatar' );
+    $( document ).triggerHandler( 'show_computer_avatar' );
     // if this is the 1st move then take center square ha ha ha ...
 //                    if ( movesCount === 0 ) {
 ////                        $ ( board[4] ).html ( 'X' );
@@ -253,9 +253,9 @@ $ ( function () {
      * whose value is 8 (4 x 2) is a candidate for a winning move.
      * very simple, actually.
      */
-    winingSquare = findRowWithSum ( 8 );
+    winingSquare = findRowWithSum( 8 );
     if ( winingSquare ) {
-      square = getSquare ( winingSquare[0], winingSquare[1] );
+      square = getSquare( winingSquare[0], winingSquare[1] );
 
 
     } else {
@@ -265,9 +265,9 @@ $ ( function () {
        * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
        * has a square that can be used to block. very simple, actually.
        */
-      blockingSquare = findRowWithSum ( 2 );
+      blockingSquare = findRowWithSum( 2 );
       if ( blockingSquare ) {
-        square = getSquare ( blockingSquare[0], blockingSquare[1] );
+        square = getSquare( blockingSquare[0], blockingSquare[1] );
 
 
       } else {
@@ -276,7 +276,7 @@ $ ( function () {
          * there is no winning or blocking move so the
          * computer will chose its square randomly.
          */
-        square = findRandomOpenSquare ();
+        square = findRandomOpenSquare();
 
       }
 
@@ -287,18 +287,18 @@ $ ( function () {
     movesCount += 1;
 
     // just a little bit of latency so the computer talking head can be seen
-    setTimeout ( function () {
-      $ ( square ).text ( 'X' ).css ( 'color', '#8800ff' ).css ( 'cursor', 'auto' );
-      if ( checkForWin ( 12 ) === false ) {
+    setTimeout( function () {
+      $( square ).text( 'X' ).css( 'color', '#8800ff' ).css( 'cursor', 'auto' );
+      if ( checkForWin( 12 ) === false ) {
         if ( movesCount < 9 ) {
-          $ ( document ).triggerHandler ( 'humans_turn' );
+          $( document ).triggerHandler( 'humans_turn' );
         } else {
-          showModalPopUpMessage ( 'Draw... Game Over!' );
-          $(document ).triggerHandler('show_game_over');
+          showModalPopUpMessage( 'Draw... Game Over!' );
+          $( document ).triggerHandler( 'show_game_over' );
         }
       } else {
-        showModalPopUpMessage ( 'The Computer Won!<br>Ha Ha LOL!!!' );
-        $(document ).triggerHandler('show_game_over');
+        showModalPopUpMessage( 'The Computer Won!<br>Ha Ha LOL!!!' );
+        $( document ).triggerHandler( 'show_game_over' );
       }
     }, 1000 );
 
@@ -312,8 +312,8 @@ $ ( function () {
    * disables the board from human play
    */
   var disableTheBoard = function () {
-    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
-      $ ( Element ).unbind ( 'click' ).css ( 'cursor', 'auto' );
+    visitEachSquare( $( 'div.square' ), function ( index, Element ) {
+      $( Element ).unbind( 'click' ).css( 'cursor', 'auto' );
     } );
 
   };
@@ -330,18 +330,18 @@ $ ( function () {
     var col = 0;
     var sum = 0;
 
-    console.log ( 'checking for wining value of ' + winingValue + ". moveCount = " + movesCount );
+    console.log( 'checking for wining value of ' + winingValue + ". moveCount = " + movesCount );
 
     if ( movesCount >= 5 ) {
       // check horizontal rows
       for ( row = 0; row < 3; row += 1 ) {
         sum = 0;
         for ( col = 0; col < 3; col += 1 ) {
-          sum += getSquarePieceValue ( row, col );
+          sum += getSquarePieceValue( row, col );
         }
 
         if ( sum === winingValue ) {
-          console.log ( 'wining value found in horizontal row' );
+          console.log( 'wining value found in horizontal row' );
           return true;
         }
       }
@@ -350,11 +350,11 @@ $ ( function () {
       for ( col = 0; col < 3; col += 1 ) {
         sum = 0;
         for ( row = 0; row < 3; row += 1 ) {
-          sum += getSquarePieceValue ( row, col );
+          sum += getSquarePieceValue( row, col );
         }
 
         if ( sum === winingValue ) {
-          console.log ( 'wining value found in vertical row' );
+          console.log( 'wining value found in vertical row' );
           return true;
         }
       }
@@ -362,19 +362,19 @@ $ ( function () {
       // check diagonal rows
       sum = 0;
       for ( row = 0; row < 3; row += 1 ) {
-        sum += getSquarePieceValue ( row, row );
+        sum += getSquarePieceValue( row, row );
       }
       if ( sum === winingValue ) {
-        console.log ( 'wining value found in diagonal row, top left to bottom right' );
+        console.log( 'wining value found in diagonal row, top left to bottom right' );
         return true;
       }
 
       sum = 0;
       for ( row = 0; row < 3; row += 1 ) {
-        sum += getSquarePieceValue ( row, 2 - row );
+        sum += getSquarePieceValue( row, 2 - row );
       }
       if ( sum === winingValue ) {
-        console.log ( 'wining value found in diagon row, top right to botton left' );
+        console.log( 'wining value found in diagon row, top right to botton left' );
         return true;
       }
 
@@ -391,25 +391,25 @@ $ ( function () {
    */
   var humanClickHandler = function ( event, Element ) {
     // mark the board
-    $ ( Element ).text ( 'O' ).css ( 'color', '#000' ).
-      css ( 'cursor', 'auto' ).unbind ( 'click' );
+    $( Element ).text( 'O' ).css( 'color', '#000' ).
+      css( 'cursor', 'auto' ).unbind( 'click' );
 
     movesCount += 1;
 
     // disable the board
-    disableTheBoard( );
+    disableTheBoard();
 
     // check for win
-    if ( checkForWin ( 3 ) === false ) {
+    if ( checkForWin( 3 ) === false ) {
       if ( movesCount < 9 ) {
-        computersTurn ();
+        computersTurn();
       } else {
-        showModalPopUpMessage ( 'Draw... Game Over!' );
-        $(document ).triggerHandler('show_game_over');
+        showModalPopUpMessage( 'Draw... Game Over!' );
+        $( document ).triggerHandler( 'show_game_over' );
       }
     } else {
-      showModalPopUpMessage ( 'Congratulations! You are the winner.' );
-      $(document ).triggerHandler('show_game_over');
+      showModalPopUpMessage( 'Congratulations! You are the winner.' );
+      $( document ).triggerHandler( 'show_game_over' );
     }
 
   };
@@ -422,14 +422,14 @@ $ ( function () {
    * enables the board for human play
    */
   var enableTheBoard = function () {
-    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
-      if ( $ ( Element ).html () === '&nbsp;' ) {
-        $ ( Element ).click (function ( event ) {
-          humanClickHandler ( event, Element );
-        } ).css ( 'cursor', 'pointer' );
+    visitEachSquare( $( 'div.square' ), function ( index, Element ) {
+      if ( $( Element ).html() === '&nbsp;' ) {
+        $( Element ).click(function ( event ) {
+          humanClickHandler( event, Element );
+        } ).css( 'cursor', 'pointer' );
       }
     } );
-  } ;
+  };
 
 
 
@@ -438,9 +438,9 @@ $ ( function () {
   /*
    * Event type humans_turn handler
    */
-  $ ( document ).on ( 'humans_turn', function () {
-    $ ( document ).triggerHandler ( 'show_human_avatar' );
-    enableTheBoard( );
+  $( document ).on( 'humans_turn', function () {
+    $( document ).triggerHandler( 'show_human_avatar' );
+    enableTheBoard();
   } );
 
 
@@ -453,33 +453,33 @@ $ ( function () {
    */
   var fillTheBoard = function ( cb ) {
     var toDos = [];
-    var $squares = $ ( 'div.square' );
+    var $squares = $( 'div.square' );
 
-    visitEachSquare ( $squares, function ( index, Element ) {
+    visitEachSquare( $squares, function ( index, Element ) {
 
       var player = index % 2 === 0 ? 'X' : 'O';
-      toDos.push ( {player : player, Element : Element} );
+      toDos.push( {player : player, Element : Element} );
 
       if ( toDos.length === 9 ) {
 
         // show the 1st square immediately
-        $ ( toDos[0].Element ).css ( 'display', 'none' ).
-          text ( toDos[0].player ).css ( 'color', toDos[0].player === 'X' ? '#8800ff' : '#000' ).fadeIn ( 'slow' );
+        $( toDos[0].Element ).css( 'display', 'none' ).
+          text( toDos[0].player ).css( 'color', toDos[0].player === 'X' ? '#8800ff' : '#000' ).fadeIn( 'slow' );
 
         // increment the index
         var i = 1;
 
         // show the remaining squares 250 milliseconds apart
-        var timer = setInterval ( function () {
+        var timer = setInterval( function () {
 
           // if this is the last toDo shut down the interval
           if ( i > 8 ) {
 
             // shut down the timer loop
-            clearInterval ( timer );
+            clearInterval( timer );
 
-            setTimeout ( function () {
-              cb ();
+            setTimeout( function () {
+              cb();
             }, 1000 );
 
           } else {
@@ -487,10 +487,10 @@ $ ( function () {
             // get the next toDo
             var toDo = toDos[i];
 
-            $ ( toDo.Element ).css ( 'display', 'none' ).
-              text ( toDo.player ).
-              css ( 'color', toDo.player === 'X' ? '#8800ff' : '#000' ).
-              fadeIn ( 'slow' );
+            $( toDo.Element ).css( 'display', 'none' ).
+              text( toDo.player ).
+              css( 'color', toDo.player === 'X' ? '#8800ff' : '#000' ).
+              fadeIn( 'slow' );
 
             // set up the next iteration of the loop
             i += 1;
@@ -512,9 +512,9 @@ $ ( function () {
    * Clear the game board without animation
    */
   var clearBoard = function () {
-    visitEachSquare ( $ ( 'div.square' ), function ( index, Element ) {
-      $ ( Element ).html ( '&nbsp;' );
-      $ ( Element ).unbind ( 'click' );
+    visitEachSquare( $( 'div.square' ), function ( index, Element ) {
+      $( Element ).html( '&nbsp;' );
+      $( Element ).unbind( 'click' );
     } );
   };
 
@@ -526,8 +526,8 @@ $ ( function () {
    * Plays the game
    */
   var play = function () {
-    clearBoard ();
-    computersTurn ();
+    clearBoard();
+    computersTurn();
   };
 
 
@@ -539,9 +539,9 @@ $ ( function () {
    * and when user clicks Begin New Game button
    */
   var startGame = function () {
-    clearBoard ();
-    fillTheBoard ( function () {
-      play ();
+    clearBoard();
+    fillTheBoard( function () {
+      play();
     } );
   };
 
@@ -552,16 +552,16 @@ $ ( function () {
   /*
    * event handler for Begin New Game button click event
    */
-  $ ( '#begingame' ).click ( function ( /*event*/ ) {
+  $( '#begingame' ).click( function ( /*event*/ ) {
     movesCount = 0;
     // hide the message_container
-    $('#message_container' ).css('display','none');
+    $( '#message_container' ).css( 'display', 'none' );
     // make the avatars container visible
-    $('#avatars_container' ).css('display', 'block');
+    $( '#avatars_container' ).css( 'display', 'block' );
     // hide avatars
-    $humanAvatar.css ( 'visibility', 'hidden' );
-    $computerAvatar.css ( 'visibility', 'hidden' );
-    startGame ();
+    $humanAvatar.css( 'visibility', 'hidden' );
+    $computerAvatar.css( 'visibility', 'hidden' );
+    startGame();
   } );
 
 
@@ -571,6 +571,6 @@ $ ( function () {
   /*
    * handles page load and user refreshing the page
    */
-  startGame ();
+  startGame();
 
 } );
