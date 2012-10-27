@@ -230,6 +230,11 @@ $( function () {
     $( '#message' ).text( 'Game Over. Click the Begin New Game button above to start a new game.' ).css( 'visibility', 'visible' );
 
   } );
+
+
+
+
+  
   /*
    * Computer's turn
    */
