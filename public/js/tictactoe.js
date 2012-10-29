@@ -43,7 +43,7 @@ $( function () {
    * Display message when the sign in button is clicked
    */
   $( '#signinButton' ).click( function ( /*event*/ ) {
-    showModalPopUpMessage( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-play version running on NodeJs.' );
+    showModalPopUpMessage( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-player version of Tic Tac Toe.' );
   } );
 
 
@@ -234,7 +234,7 @@ $( function () {
 
 
 
-  
+
   /*
    * Computer's turn
    */
