@@ -1,18 +1,18 @@
 {
-    "name"         : "application-name",
-    "version"      : "0.0.1-2",
-    "private"      : true,
-    "scripts"      : {
-        "start" : "node app.js"
-    },
-    "dependencies" : {
-        "express"         : "3.0.0rc5",
-        "ejs"             : "*",
-        "less-middleware" : "*",
-        "mongoskin"       : "0.4.4"
-    },
-    "subdomain"    : "jefftschwartz.TicTacToe",
-    "engines"      : {
-        "node" : "0.8.x"
-    }
+  "name": "application-name",
+  "version": "0.0.1-4",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.0.0rc5",
+    "ejs": "*",
+    "less-middleware": "*",
+    "mongoskin": "0.4.4"
+  },
+  "subdomain": "jefftschwartz.TicTacToe",
+  "engines": {
+    "node": "0.8.x"
+  }
 }

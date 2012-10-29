@@ -42,7 +42,8 @@ $( function () {
   /*
    * Display message when the sign in button is clicked
    */
-  $( '#signinButton' ).click( function ( /*event*/ ) {
+  $( '#signinButton' ).click( function ( event ) {
+    event.preventDefault();
     showModalPopUpMessage( '<strong>Coming soon!</strong><br>Nothing to log into yet but stay tuned for a multi-player version of Tic Tac Toe.' );
   } );
 
