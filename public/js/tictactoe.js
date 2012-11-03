@@ -1,5 +1,10 @@
-$( function () {
+require.config({
+  paths: {
+    "jquery" : "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min"
+  }
+});
 
+requirejs(['order!jquery', 'order!libs/bootstrap/js/bootstrap', 'app/less.min' ], function($){
   "use strict";
 
   var movesCount = 0;
@@ -380,7 +385,7 @@ $( function () {
         sum += getSquarePieceValue( row, 2 - row );
       }
       if ( sum === winingValue ) {
-        console.log( 'wining value found in diagon row, top right to botton left' );
+        console.log( 'wining value found in diagonal row, top right to botton left' );
         return true;
       }
 
@@ -579,4 +584,5 @@ $( function () {
    */
   startGame();
 
-} );
+
+});
