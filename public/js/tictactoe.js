@@ -1,10 +1,14 @@
 require.config({
   paths: {
-    "jquery" : "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min"
+    "jquery" : "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min",
+    "bootstrap": "libs/bootstrap/js/bootstrap"
+  },
+  shim: {
+    "bootstrap": ['jquery']
   }
 });
 
-requirejs(['order!jquery', 'order!libs/bootstrap/js/bootstrap', 'app/less.min' ], function($){
+requirejs(['jquery', 'app/less.min', 'bootstrap' ], function($){
   "use strict";
 
   var movesCount = 0;
@@ -245,6 +249,7 @@ requirejs(['order!jquery', 'order!libs/bootstrap/js/bootstrap', 'app/less.min' ]
    * Computer's turn
    */
   var computersTurn = function () {
+
     var square;
 //    var num;
     var winingSquare;
@@ -546,8 +551,7 @@ requirejs(['order!jquery', 'order!libs/bootstrap/js/bootstrap', 'app/less.min' ]
 
 
   /*
-   * initializes the game when page renders
-   * and when user clicks Begin New Game button
+   * initializes the game when user clicks Begin New Game button
    */
   var startGame = function () {
     clearBoard();
@@ -582,7 +586,9 @@ requirejs(['order!jquery', 'order!libs/bootstrap/js/bootstrap', 'app/less.min' ]
   /*
    * handles page load and user refreshing the page
    */
-  startGame();
-
+  $('#block' ).css('visibility', 'visible');
+  fillTheBoard( function () {
+    play();
+  } );
 
 });

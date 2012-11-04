@@ -16,6 +16,7 @@
             }
         </style>
         <link href="js/libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+        <!--<script src="js/app/less.min.js" type="text/javascript"></script>-->
 
         <!-- My less style sheet -->
         <link rel="stylesheet/less" type="text/css" href="css/tictactoe.less">
@@ -84,7 +85,7 @@
             </div>
 
             <!-- The thinking heads and game board container -->
-            <div>
+            <div id="block">
 
                 <!-- The thinking heads container -->
                 <div class="row" style="margin-bottom: 25px;" id="avatars_container">
@@ -102,37 +103,38 @@
                 <!-- The game board -->
                 <div class="row">
                     <div class="span4" style="text-align: center;">
-                        <div class="square" style="border-right: solid 1px #444;">&nbsp;</div>
+                        <div class="square border-right">&nbsp;</div>
                     </div>
                     <div class="span4" style="text-align: center;">
                         <div class="square">&nbsp;</div>
                     </div>
                     <div class="span4" style="text-align: center;">
-                        <div class="square" style="border-left: solid 1px #444;">&nbsp;</div>
+                        <div class="square border-left">&nbsp;</div>
                     </div>
                 </div>
                 <div class="row" style="border-top: solid 1px #444; border-bottom: solid 1px #444;">
                     <div class="span4" style="text-align: center;">
-                        <div class="square" style="border-right: solid 1px #444;">&nbsp;</div>
+                        <div class="square border-right">&nbsp;</div>
                     </div>
                     <div class="span4" style="text-align: center;">
                         <div class="square">&nbsp;</div>
                     </div>
                     <div class="span4" style="text-align: center;">
-                        <div class="square" style="border-left: solid 1px #444;">&nbsp;</div>
+                        <div class="square border-left">&nbsp;</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="span4" style="text-align: center;">
-                        <div class="square" style="border-right: solid 1px #444;">&nbsp;</div>
+                        <div class="square border-right">&nbsp;</div>
                     </div>
                     <div class="span4" style="text-align: center;">
                         <div class="square">&nbsp;</div>
                     </div>
                     <div class="span4" style="text-align: center;">
-                        <div class="square" style="border-left: solid 1px #444;">&nbsp;</div>
+                        <div class="square border-left">&nbsp;</div>
                     </div>
                 </div>
+
                 <!-- Modal -->
                 <div class="modal hide fade" id="myModal">
                     <div class="modal-header">
@@ -171,10 +173,6 @@
         <!--This sets the baseUrl to the "scripts" directory, and
             loads a script that will have a module ID of 'main'-->
         <script data-main="js/tictactoe" src="js/require.js"></script>
-
-        <!--<script src="js/app/less.min.js" type="text/javascript"></script>-->
-        <!--<script src="js/libs/bootstrap/js/bootstrap.js"></script>-->
-        <!--<script src="js/app/tictactoe.js"> </script>-->
 
     </body>
 </html>
