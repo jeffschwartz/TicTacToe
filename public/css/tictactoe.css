@@ -1,0 +1,19 @@
+#block {
+  visibility: hidden;
+}
+div.square {
+  font-size: 10em;
+  line-height: 1em;
+}
+div.square.border-right {
+  border-right: solid 1px #444;
+}
+div.square.border-left {
+  border-left: solid 1px #444;
+}
+span.avatarspeak {
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 2em;
+  color: #0f0;
+}

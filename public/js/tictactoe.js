@@ -1,14 +1,15 @@
-require.config({
-  paths: {
-    "jquery" : "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min",
-    "bootstrap": "libs/bootstrap/js/bootstrap"
+require.config( {
+  paths : {
+    "jquery"    : "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min",
+    "bootstrap" : "libs/bootstrap/js/bootstrap"
   },
-  shim: {
-    "bootstrap": ['jquery']
+  shim  : {
+    "bootstrap" : ['jquery']
   }
-});
+} );
 
-requirejs(['jquery', 'app/less.min', 'bootstrap' ], function($){
+// domReady -- see http://requirejs.org/docs/api.html#pageload
+requirejs( ['jquery', 'bootstrap', 'domReady!' ], function ( $ ) {
   "use strict";
 
   var movesCount = 0;
@@ -586,9 +587,9 @@ requirejs(['jquery', 'app/less.min', 'bootstrap' ], function($){
   /*
    * handles page load and user refreshing the page
    */
-  $('#block' ).css('visibility', 'visible');
+  $( '#block' ).css( 'visibility', 'visible' );
   fillTheBoard( function () {
     play();
   } );
 
-});
+} );
