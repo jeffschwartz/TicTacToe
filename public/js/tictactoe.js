@@ -167,23 +167,38 @@ requirejs( ['jquery', 'bootstrap', 'domReady!' ], function ( $ ) {
 
 
   /*
-   * randomly find and play an open square, used by computer
+   * searches for a row (h,v,d) whose value is 4.
+   * if found returns a square in that row chosen randomly.
+   * otherwise returns null.
+   */
+
+
+
+
+
+  /*
+   * randomly find and play any open square, used by computer
    */
   var findRandomOpenSquare = function () {
     var keepSearching = true;
-    var square;
+    var squareValue;
     var num;
     var text;
+    var square = [];
 
     while ( keepSearching === true ) {
       num = Math.floor( (Math.random() * 9) + 1 );
-      square = board[num - 1];
-      text = $( square ).html();
+      squareValue = board[num - 1];
+      text = $( squareValue ).html();
 
       if ( text === '&nbsp;' ) {
         keepSearching = false;
       }
     }
+
+    num -= 1;
+    square.push( Math.floor( num / 3 ) );
+    square.push( num % 3 );
     return square;
 
   };
@@ -246,60 +261,110 @@ requirejs( ['jquery', 'bootstrap', 'domReady!' ], function ( $ ) {
 
 
 
+  /**
+   * Generate a random first move for the computer, restricting it to any corner or the center square.
+   * Therefore, first move are restricted to 0, 2, 4, 6 and 8 squares.
+   */
+  var randomFirstMove = function () {
+
+    console.log( 'doing it' );
+    var squareValue = -1,
+      i = -1,
+      l = -1,
+      squares = [0, 2, 4, 6, 8],
+      square = [],
+      doIt = true;
+
+    while ( doIt ) {
+      squareValue = Math.floor( (Math.random() * 9) + 1 );
+      console.log( squareValue );
+      for ( i = 0, l = squares.length; i < l; i++ ) {
+        if ( squares[i] === squareValue ) {
+          doIt = false;
+          break;
+        }
+      }
+    }
+
+    square.push( Math.floor( squareValue / 3 ) ); // row
+    square.push( squareValue % 3 );  // col
+
+    return square;
+  };
+
   /*
    * Computer's turn
    */
   var computersTurn = function () {
 
     var square;
-//    var num;
-    var winingSquare;
-    var blockingSquare;
 
     $( document ).triggerHandler( 'show_computer_avatar' );
-    // if this is the 1st move then take center square ha ha ha ...
-//                    if ( movesCount === 0 ) {
-////                        $ ( board[4] ).html ( 'X' );
-//
-//
-//                    } else {
 
-    /*
-     * finds a winning move if there is one mathematically.
-     * since computer pieces each have a value of 4, any row
-     * whose value is 8 (4 x 2) is a candidate for a winning move.
-     * very simple, actually.
-     */
-    winingSquare = findRowWithSum( 8 );
-    if ( winingSquare ) {
-      square = getSquare( winingSquare[0], winingSquare[1] );
+    if ( movesCount === 0 ) {
+      console.log( 'computer thinking about 1st move...' );
+      square = randomFirstMove();
+      console.log( 'computer 1st move to ' + square );
+      square = getSquare( square[0], square[1] );
 
 
     } else {
-
       /*
-       * finds a blocking move if there is one mathematically.
-       * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
-       * has a square that can be used to block. very simple, actually.
+       * finds a winning move if there is one mathematically.
+       * since computer pieces each have a value of 4, any row
+       * whose value is 8 (4 x 2) is a candidate for a winning move.
+       * very simple, actually.
        */
-      blockingSquare = findRowWithSum( 2 );
-      if ( blockingSquare ) {
-        square = getSquare( blockingSquare[0], blockingSquare[1] );
+      console.log( 'computer looking for winning move...' );
+      square = findRowWithSum( 8 );
+      if ( square ) {
+        console.log( 'computer found winning square at ' + square );
+        square = getSquare( square[0], square[1] );
 
 
       } else {
 
         /*
-         * there is no winning or blocking move so the
-         * computer will chose its square randomly.
+         * finds a blocking move if there is one mathematically.
+         * since Os (human player' piece) is = to 1, any row with a value of 2 ( O x 2)
+         * has a square that can be used to block. very simple, actually.
          */
-        square = findRandomOpenSquare();
+        console.log( 'computer looking for blocking square...' );
+        square = findRowWithSum( 2 );
+        if ( square ) {
+          console.log( 'computer found blocking square at ' + square );
+          square = getSquare( square[0], square[1] );
+
+
+        } else {
+
+          /*
+           * Select a square in any row where the computer has the only piece.
+           */
+          console.log( 'computer looking for double down square...' );
+          square = findRowWithSum( 4 );
+          if ( square ) {
+            console.log( 'computer found double down square at ' + square );
+            square = getSquare( square[0], square[1] );
+
+
+          } else {
+
+            /*
+             * there is no winning or blocking move so the
+             * computer will chose its square randomly.
+             */
+            console.log( 'computer looking for random square...' );
+            square = findRandomOpenSquare();
+            console.log( 'computer found random square at ' + square );
+            square = getSquare( square[0], square[1] );
+          }
+
+        }
 
       }
 
     }
-
-//                    }
 
     movesCount += 1;
 
