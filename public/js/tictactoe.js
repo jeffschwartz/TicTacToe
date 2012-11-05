@@ -379,7 +379,7 @@ requirejs( ['jquery', 'bootstrap', 'domReady!' ], function ( $ ) {
           $( document ).triggerHandler( 'show_game_over' );
         }
       } else {
-        showModalPopUpMessage( 'The Computer Won!<br>Ha Ha LOL!!!' );
+        showModalPopUpMessage( 'Computer Wins. Try Again.' );
         $( document ).triggerHandler( 'show_game_over' );
       }
     }, 1000 );
@@ -486,11 +486,11 @@ requirejs( ['jquery', 'bootstrap', 'domReady!' ], function ( $ ) {
       if ( movesCount < 9 ) {
         computersTurn();
       } else {
-        showModalPopUpMessage( 'Draw... Game Over!' );
+        showModalPopUpMessage( "Draw. Game Over." );
         $( document ).triggerHandler( 'show_game_over' );
       }
     } else {
-      showModalPopUpMessage( 'Congratulations! You are the winner.' );
+      showModalPopUpMessage( 'Congratulations. You Win.' );
       $( document ).triggerHandler( 'show_game_over' );
     }
 
