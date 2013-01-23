@@ -167,16 +167,6 @@ requirejs( ['jquery', 'bootstrap', 'domReady!' ], function ( $ ) {
 
 
   /*
-   * searches for a row (h,v,d) whose value is 4.
-   * if found returns a square in that row chosen randomly.
-   * otherwise returns null.
-   */
-
-
-
-
-
-  /*
    * randomly find and play any open square, used by computer
    */
   var findRandomOpenSquare = function () {
