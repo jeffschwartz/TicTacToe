@@ -8,14 +8,14 @@ So click on the link below and play a few games of Tic Tac Toe and see who’s r
 
 I wrote Tic Tac Toe using 100% JavaScript. That means JavaScript on the server and JavaScript on the client. Here’s a few implementation details, just in case you are interested:
 
-On the front end I employed:
+## On the front end I employed:
 
 * A customized version of Twitter Bootstrap’s 12 column grid. I needed to eliminate the gutters between columns so the divs could buttress each other which was necessary for the game grid.
 * RequireJS for JavaScript modularity.
 * LESS for dynamic CSS stylesheets.
 * JavaScript/jQuery for the Tic Tac Toe game engine. Nothing fancy here but I did intentionally dumb down the computer somewhat because I didn’t want it to be too one-sided in the computer’s favor. You can win if you are careful but I have to admit, the computer is pretty smart too
 
-And on the back end I used:
+## And on the back end I used:
 
 * NodeJS for the http server.
 * Express Web Framework for simple http request routing.
