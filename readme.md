@@ -23,4 +23,6 @@ And on the back end I used:
 * MongoDB for storing unique url hits and from which a visitor count is displayed in the footer of the page.
 * MongoSkin for its nice MongoDb wrapper employing the future pattern.
 
+Play
+----
 [Play Tic Tac Toe on nodejitsu!](http://jefftschwartz.tictactoe.jit.su "click here to play Tic Tac Toe on nodejitsu")
