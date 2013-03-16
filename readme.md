@@ -4,9 +4,7 @@ I’ve always wanted to recreate the simple games of my youth on the computer. T
 
 So here’s Tic Tac Toe, which I chose to be the first game I’d recreate because out of all the childhood games of my youth none were as exciting and as much fun to play. The funny thing is, I still enjoy playing it today, and now, having written this, I won’t even need pencil and paper anymore. I don’t know if that’s a good or a bad thing but I do know I had a real blast cooking this game up.
 
-So click on the link below and play a few games of Tic Tac Toe and see who’s really smarter, you or the computer.
-
-I wrote Tic Tac Toe using 100% JavaScript. That means JavaScript on the server and JavaScript on the client. Here’s a few implementation details, just in case you are interested:
+I wrote Tic Tac Toe using 100% JavaScript. That means JavaScript on the server and JavaScript on the client. Following are the implementation details and architecture in case you are interested.
 
 On the front end I employed:
 ----------------------------
@@ -25,4 +23,5 @@ And on the back end I used:
 
 Play Tic Tac Toe on nodejitsu
 -----------------------------
+So click on the link below and play a few games of Tic Tac Toe and see who’s really smarter, you or the computer.
 [Click here to play Tic Tac Toe](http://jefftschwartz.tictactoe.jit.su "click here to play Tic Tac Toe on nodejitsu")
