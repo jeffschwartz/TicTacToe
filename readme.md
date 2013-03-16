@@ -1,3 +1,5 @@
+# A Childhood Favorite — Tic Tac Toe
+
 I’ve always wanted to recreate the simple games of my youth on the computer. Those games, the ones I played with pencil and paper and loved as a child, were as exciting to me then as the video games must be to the children playing them today.
 
 So here’s Tic Tac Toe, which I chose to be the first game I’d recreate because out of all the childhood games of my youth none were as exciting and as much fun to play. The funny thing is, I still enjoy playing it today, and now, having written this, I won’t even need pencil and paper anymore. I don’t know if that’s a good or a bad thing but I do know I had a real blast cooking this game up.
