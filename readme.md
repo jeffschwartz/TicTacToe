@@ -24,4 +24,5 @@ And on the back end I used:
 Play Tic Tac Toe on nodejitsu
 -----------------------------
 So click on the link below and play a few games of Tic Tac Toe and see who’s really smarter, you or the computer.
+
 [Click here to play Tic Tac Toe](http://jefftschwartz.tictactoe.jit.su "click here to play Tic Tac Toe on nodejitsu")
