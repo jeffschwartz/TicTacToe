@@ -1,15 +1,15 @@
 {
   "name": "application-name",
-  "version": "0.0.1-16",
+  "version": "0.0.1-17",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.0.0rc5",
-    "ejs": "*",
-    "less-middleware": "*",
-    "mongoskin": "0.6.1"
+    "express": "~3.0.0rc5",
+    "ejs": "~0.8.5",
+    "less-middleware": "~0.1.15",
+    "mongoskin": "~0.6.1"
   },
   "subdomain": "jefftschwartz.TicTacToe",
   "engines": {
